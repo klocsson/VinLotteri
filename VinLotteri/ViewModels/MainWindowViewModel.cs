@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using VinLotteri.Services;
 
 namespace VinLotteri.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Welcome to Avalonia!";
+        public MainWindowViewModel(Database db)
+        {
+            TicketsList = new TicketsListViewModel(db.GetTickets());
+        }
+
+        public TicketsListViewModel TicketsList { get; }
     }
 }

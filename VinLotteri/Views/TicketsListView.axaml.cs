@@ -1,8 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Tickets.Views
+namespace VinLotteri.Views
 {
     public class TicketsListView : UserControl
     {
