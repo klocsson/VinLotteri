@@ -34,5 +34,15 @@ namespace VinLotteri.Services
                 tickets.Insert(ticket);
             }
         }
+        
+        public void DeleteTicket(Ticket ticket)
+        {
+            using(var db = new LiteDatabase("vinLotteri.db"))
+            {
+                var tickets =  db.GetCollection<Ticket>("tickets");
+
+                tickets.DeleteMany(t => t.Name == ticket.Name && t.NrOfTickets == ticket.NrOfTickets && t.PurchaseDate == ticket.PurchaseDate);
+            }
+        }
     }
 }

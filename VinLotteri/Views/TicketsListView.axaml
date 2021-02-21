@@ -20,14 +20,22 @@
                     Content="Add"/>
         </Grid>
         
-        <ListBox Items="{Binding Tickets}" Margin="0 5 0 0">
+        <ListBox Items="{Binding Tickets}" Margin="0 5 0 0" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border>
-                        <TextBlock Text="{Binding Name}"/>
-                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Width="200"/>
+                        <TextBlock Grid.Column="1" Margin="20 0 0 0" Text="{Binding NrOfTickets}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
+        <Button 
+                Margin="0 5 0 0" 
+                Width="250"
+                HorizontalContentAlignment="Center"
+                Command="{Binding DeleteTicket}"
+                Content="Delete"/>
     </StackPanel>
 </UserControl>

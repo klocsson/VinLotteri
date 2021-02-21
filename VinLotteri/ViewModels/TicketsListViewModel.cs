@@ -11,6 +11,8 @@ namespace VinLotteri.ViewModels
     {
         string? name;
         int numberOfTickets;
+
+        private Ticket selectedItem;
         
         public TicketsListViewModel(IDatabase db)
         {
@@ -29,8 +31,21 @@ namespace VinLotteri.ViewModels
                     db.AddTicket(ticket);
                 }, 
                 addEnabled);
+            
+            DeleteTicket = ReactiveCommand.Create(
+                () =>
+                {
+                    db.DeleteTicket(SelectedItem);
+                    Tickets.Remove(SelectedItem);
+                });
         }
 
+        public Ticket SelectedItem
+        {
+            get => selectedItem;
+            set => this.RaiseAndSetIfChanged(ref selectedItem, value);
+        }
+        
         public string Name
         {
             get => name;
@@ -42,9 +57,10 @@ namespace VinLotteri.ViewModels
             get => numberOfTickets;
             set => this.RaiseAndSetIfChanged(ref numberOfTickets, value);
         }
-
+        
         public ObservableCollection<Ticket> Tickets { get; }
         
         public ReactiveCommand<Unit, Unit> AddTicket { get; }
+        public ReactiveCommand<Unit, Unit> DeleteTicket { get; }
     }
 }

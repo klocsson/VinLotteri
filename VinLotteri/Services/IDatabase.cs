@@ -7,5 +7,6 @@ namespace VinLotteri.Services
     {
         IEnumerable<Ticket> GetTickets();
         void AddTicket(Ticket ticket);
+        public void DeleteTicket(Ticket ticket);
     }
 }
