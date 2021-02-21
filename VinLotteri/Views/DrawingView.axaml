@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VinLotteri.Views.DrawingView">
+    <Grid ColumnDefinitions="2*,18*,60*,18*,2*" RowDefinitions="2*,76*,10*,10*,2*" HorizontalAlignment="Center">
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Orientation="Horizontal">
+            <Label VerticalAlignment="Bottom">Nr of prizes: </Label>  
+            <TextBox Grid.Column="1" Margin="10, 0 0  0" MaxHeight="30" VerticalAlignment="Bottom"/>
+        </StackPanel>
+        <Button Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200"/>
+    </Grid>
+</UserControl>

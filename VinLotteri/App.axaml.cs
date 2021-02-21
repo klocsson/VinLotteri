@@ -19,10 +19,11 @@ namespace VinLotteri
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var db = new Database();
+                var random = new RandomOrg();
                 
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(db),
+                    DataContext = new MainWindowViewModel(db, random),
                 };
             }
 

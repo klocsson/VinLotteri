@@ -6,8 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="VinLotteri.Views.MainWindow"
         Title="VinLotteri">
-
-
+    
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
@@ -22,14 +21,10 @@
                 <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Tickets</TextBlock>
             </TabItem.Header>
         </TabItem>
-        <TabItem>
+        <TabItem Content="{Binding Drawing}">
             <TabItem.Header>
                 <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Drawing</TextBlock>
             </TabItem.Header>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Square : " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Rectangle Fill="Blue" Width="63" Height="41"/>              
-            </StackPanel>
         </TabItem>
     </TabControl>
 
