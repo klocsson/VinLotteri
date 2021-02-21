@@ -1,14 +1,38 @@
+using System;
 using System.Collections.Generic;
+using LiteDB;
 using VinLotteri.Models;
 
 namespace VinLotteri.Services
 {
-    public class Database
+    public class Database : IDatabase
     {
-        public IEnumerable<Ticket> GetTickets() => new[]
+        public IEnumerable<Ticket> GetTickets()
         {
-            new Ticket { Name = "Michal", NrOfTickets = 5},
-            new Ticket { Name = "Gard", NrOfTickets = 3},
-        };
+            using(var db = new LiteDatabase("vinLotteri.db"))
+            {
+                var tickets =  db.GetCollection<Ticket>("tickets");
+
+                var today = DateTime.Now.Date.ToShortDateString();
+
+                return tickets.Query()
+                    .Where(t => t.PurchaseDate.Equals(today))
+                    .OrderBy(t => t.Name)
+                    .ToList();
+            }
+        }
+
+        public void AddTicket(Ticket ticket)
+        {
+            using(var db = new LiteDatabase("vinLotteri.db"))
+            {
+                var tickets =  db.GetCollection<Ticket>("tickets");
+                var today = DateTime.Now.Date.ToShortDateString();
+
+                ticket.PurchaseDate = today;
+
+                tickets.Insert(ticket);
+            }
+        }
     }
 }

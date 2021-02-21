@@ -4,5 +4,7 @@ namespace VinLotteri.Models
     {
         public string? Name { get; set; }
         public int NrOfTickets { get; set; }
+        
+        public string? PurchaseDate { get; set; }
     }
 }

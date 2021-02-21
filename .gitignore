@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 .vs/
+VinLotteri.app/
 
 bin/
 obj/

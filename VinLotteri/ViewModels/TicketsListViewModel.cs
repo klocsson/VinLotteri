@@ -3,17 +3,18 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using ReactiveUI;
 using VinLotteri.Models;
+using VinLotteri.Services;
 
 namespace VinLotteri.ViewModels
 {
     public class TicketsListViewModel : ViewModelBase
     {
-        string name;
+        string? name;
         int numberOfTickets;
         
-        public TicketsListViewModel(IEnumerable<Ticket> tickets)
+        public TicketsListViewModel(IDatabase db)
         {
-            Tickets = new ObservableCollection<Ticket>(tickets);
+            Tickets = new ObservableCollection<Ticket>(db.GetTickets());
             var addEnabled = this.WhenAnyValue(
                 t => t.Name,
                 t => t.NumberOfTickets,
@@ -21,7 +22,12 @@ namespace VinLotteri.ViewModels
                            !string.IsNullOrWhiteSpace(i.ToString()) && i > 0);
             
             AddTicket = ReactiveCommand.Create(
-                () => new Ticket { Name = Name, NrOfTickets = NumberOfTickets}, 
+                () =>
+                {
+                    var ticket = new Ticket {Name = Name, NrOfTickets = NumberOfTickets};
+                    Tickets.Add(ticket);
+                    db.AddTicket(ticket);
+                }, 
                 addEnabled);
         }
 
@@ -39,6 +45,6 @@ namespace VinLotteri.ViewModels
 
         public ObservableCollection<Ticket> Tickets { get; }
         
-        public ReactiveCommand<Unit, Ticket> AddTicket { get; }
+        public ReactiveCommand<Unit, Unit> AddTicket { get; }
     }
 }

@@ -4,9 +4,9 @@ namespace VinLotteri.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel(Database db)
+        public MainWindowViewModel(IDatabase db)
         {
-            TicketsList = new TicketsListViewModel(db.GetTickets());
+            TicketsList = new TicketsListViewModel(db);
         }
 
         public TicketsListViewModel TicketsList { get; }
