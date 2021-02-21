@@ -3,6 +3,7 @@
         xmlns:vm="using:VinLotteri.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Tickets.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="VinLotteri.Views.MainWindow"
         Title="VinLotteri">
@@ -19,13 +20,13 @@
         
         <TabItem>
             <TabItem.Header>
-                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Circle</TextBlock>
+                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Tickets</TextBlock>
             </TabItem.Header>
-            <TextBlock Text="I am in the circle page !" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <views:TicketsListView/>
         </TabItem>
         <TabItem>
             <TabItem.Header>
-                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Triangle</TextBlock>
+                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Wines</TextBlock>
             </TabItem.Header>
             <StackPanel>
                 <TextBlock Text="I am in the triangle page ! I'll put a button to show you that each page contains what you want." HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -34,7 +35,7 @@
         </TabItem>
         <TabItem>
             <TabItem.Header>
-                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Square</TextBlock>
+                <TextBlock VerticalAlignment="Center" Padding="10 0 0 0">Drawing</TextBlock>
             </TabItem.Header>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Square : " HorizontalAlignment="Left" VerticalAlignment="Center"/>
