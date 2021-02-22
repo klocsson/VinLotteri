@@ -4,11 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VinLotteri.Views.DrawingView">
-    <Grid ColumnDefinitions="2*,18*,60*,18*,2*" RowDefinitions="2*,76*,10*,10*,2*" HorizontalAlignment="Center">
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Orientation="Horizontal">
-            <Label VerticalAlignment="Bottom">Nr of prizes: </Label>  
-            <TextBox Grid.Column="1" Margin="10, 0 0  0" MaxHeight="30" VerticalAlignment="Bottom"/>
-        </StackPanel>
-        <Button Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200" Command="{Binding Draw}"/>
+    <UserControl.Styles>
+        <Style Selector="TextBlock.red">
+            <Setter Property="Opacity" Value="0.2"/>
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:3.0"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="TextBlock.red[IsVisible=True]">
+            <Setter Property="Opacity" Value="1"/>
+        </Style>
+    </UserControl.Styles>
+    <Grid ColumnDefinitions="2*,18*,60*,18*,2*" RowDefinitions="2*,76*,10*,10*,2*" HorizontalAlignment="Stretch">
+        <TextBlock Grid.Column="2" Grid.Row="1" Classes="red" Text="Michal" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding IsVisible}"/>
+        <ProgressBar Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Value="{Binding Progress}" Height="50" Foreground="{StaticResource Burgundy}"/>
+
+        <Button Name="Button" Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200" Command="{Binding Draw}"/>
     </Grid>
 </UserControl>

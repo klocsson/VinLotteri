@@ -6,7 +6,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="VinLotteri.Views.MainWindow"
         Title="VinLotteri">
-    
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
