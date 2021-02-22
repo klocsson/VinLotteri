@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace VinLotteri.Services
 {
     public interface IRandom
     {
-        List<int> getRandomNumbers(int from, int to, int size);
+        public Task<List<int>> getRandomNumbers(int @from, int to, int size, bool replacement = false);
     }
 }

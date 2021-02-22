@@ -9,6 +9,6 @@
             <Label VerticalAlignment="Bottom">Nr of prizes: </Label>  
             <TextBox Grid.Column="1" Margin="10, 0 0  0" MaxHeight="30" VerticalAlignment="Bottom"/>
         </StackPanel>
-        <Button Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200"/>
+        <Button Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200" Command="{Binding Draw}"/>
     </Grid>
 </UserControl>
