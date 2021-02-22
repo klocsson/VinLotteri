@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using ReactiveUI;
+using VinLotteri.Models;
 using VinLotteri.Services;
 
 namespace VinLotteri.ViewModels
@@ -11,8 +12,14 @@ namespace VinLotteri.ViewModels
     {
         private List<int> shuffleOrder;
         private List<int> winners;
+        private List<Ticket> tickets;
+        private List<Ticket> shuffledTickets = new List<Ticket>();
+
+        private Ticket winingTicket;
+        private string winner;
 
         private int progress;
+
         private IDatabase db;
         private IRandom randomService;
 
@@ -36,16 +43,41 @@ namespace VinLotteri.ViewModels
             get => progress;
             set => this.RaiseAndSetIfChanged(ref progress, value);
         }
+        
+        public string Winner
+        {
+            get => winner;
+            set => this.RaiseAndSetIfChanged(ref winner, value);
+        }
 
         public ReactiveCommand<Unit, Unit> Draw { get; }
  
         private async void draw()
         {
+            await initDrawing();
+
+            winingTicket = shuffledTickets[winners.First()];
+            winners.RemoveAt(0);
+
+            Winner = winingTicket.Name;
             IsVisible = false;
-            var tickets = db.GetTickets().ToList();
+
             await generateProgress();
             IsVisible = true;
-            shuffleOrder = await randomService.getRandomNumbers(1, 10, 5);
+        }
+
+        private async Task initDrawing()
+        {
+            if (shuffleOrder == null)
+            {
+                tickets = db.GetTickets().ToList();
+                shuffleOrder = await randomService.getRandomNumbers(0, tickets.Count - 1, tickets.Count);
+                winners = await randomService.getRandomNumbers(0, tickets.Count - 1, 10);
+                foreach (var index in shuffleOrder)
+                {
+                    shuffledTickets.Add(tickets[index]);
+                }
+            }
         }
 
         private async Task generateProgress()
@@ -53,7 +85,7 @@ namespace VinLotteri.ViewModels
             for (int i = 1; i <= 100; i++)
             {
                 Progress = i;
-                await Task.Delay(15);
+                await Task.Delay(10);
             }
         }
     }

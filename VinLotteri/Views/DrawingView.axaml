@@ -6,7 +6,7 @@
              x:Class="VinLotteri.Views.DrawingView">
     <UserControl.Styles>
         <Style Selector="TextBlock.red">
-            <Setter Property="Opacity" Value="0.2"/>
+            <Setter Property="Opacity" Value="0.0"/>
             <Setter Property="FontSize" Value="40" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Transitions">
@@ -20,7 +20,7 @@
         </Style>
     </UserControl.Styles>
     <Grid ColumnDefinitions="2*,18*,60*,18*,2*" RowDefinitions="2*,76*,10*,10*,2*" HorizontalAlignment="Stretch">
-        <TextBlock Grid.Column="2" Grid.Row="1" Classes="red" Text="Michal" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding IsVisible}"/>
+        <TextBlock Grid.Column="2" Grid.Row="1" Classes="red" Text="{Binding Winner}" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding IsVisible}"/>
         <ProgressBar Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Value="{Binding Progress}" Height="50" Foreground="{StaticResource Burgundy}"/>
 
         <Button Name="Button" Content="Draw" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200" Command="{Binding Draw}"/>
