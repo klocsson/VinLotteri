@@ -12,5 +12,10 @@
     
     <Application.Resources>
         <SolidColorBrush x:Key="Burgundy">#800020</SolidColorBrush>
+        <SolidColorBrush x:Key="BurgundyLight">#8c1633</SolidColorBrush>
+        <SolidColorBrush x:Key="Grey">#F0F0F0</SolidColorBrush>
+        <StaticResource x:Key="TabItemHeaderSelectedPipeFill" ResourceKey="Burgundy" />
+        <StaticResource x:Key="TabItemHeaderForegroundUnselectedPointerOver" ResourceKey="Grey" />
+        <StaticResource x:Key="TabItemHeaderForegroundSelectedPointerOver" ResourceKey="Burgundy" />
     </Application.Resources>
 </Application>

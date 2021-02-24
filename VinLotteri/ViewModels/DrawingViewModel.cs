@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
@@ -13,22 +14,23 @@ namespace VinLotteri.ViewModels
         private List<int> shuffleOrder;
         private List<int> winners;
         private List<Ticket> tickets;
-        private List<Ticket> shuffledTickets = new List<Ticket>();
+        private List<string> expandedTickets = new List<string>();
+        private List<string> shuffledTickets = new List<string>();
 
-        private Ticket winingTicket;
+        private string winingTicket;
         private string winner;
 
         private int progress;
 
         private IDatabase db;
-        private IRandom randomService;
+        private IDrawingService drawingService;
 
         private bool isVisible;
         
-        public DrawingViewModel(IDatabase db, IRandom randomService)
+        public DrawingViewModel(IDatabase db, IDrawingService drawingService)
         {
             this.db = db;
-            this.randomService = randomService;
+            this.drawingService = drawingService;
             Draw = ReactiveCommand.Create(draw);
         }
 
@@ -54,28 +56,45 @@ namespace VinLotteri.ViewModels
  
         private async void draw()
         {
-            await initDrawing();
-
-            winingTicket = shuffledTickets[winners.First()];
-            winners.RemoveAt(0);
-
-            Winner = winingTicket.Name;
             IsVisible = false;
-
+            
+            var drawingTask = getDrawingData();
             await generateProgress();
-            IsVisible = true;
-        }
+            await drawingTask;
 
-        private async Task initDrawing()
+            if (winners.Count > 0)
+            {
+                winingTicket = shuffledTickets[winners.First()];
+                winners.RemoveAt(0);
+                Winner = winingTicket;
+                
+                IsVisible = true;
+            }
+        }
+        
+        private async Task getDrawingData()
         {
             if (shuffleOrder == null)
             {
                 tickets = db.GetTickets().ToList();
-                shuffleOrder = await randomService.getRandomNumbers(0, tickets.Count - 1, tickets.Count);
-                winners = await randomService.getRandomNumbers(0, tickets.Count - 1, 10);
+                expandTickets(tickets);
+                
+                shuffleOrder = await drawingService.getShufflingOrder(0, expandedTickets.Count - 1, expandedTickets.Count);
+                winners = await drawingService.getWinners(0, expandedTickets.Count - 1);
                 foreach (var index in shuffleOrder)
                 {
-                    shuffledTickets.Add(tickets[index]);
+                    shuffledTickets.Add(expandedTickets[index]);
+                }
+            }
+        }
+
+        private void expandTickets(List<Ticket> tickets)
+        {
+            foreach (var ticket in tickets)
+            {
+                for (int i = 0; i < ticket.NrOfTickets; i++)
+                {
+                    expandedTickets.Add(ticket.Name);
                 }
             }
         }
@@ -85,7 +104,7 @@ namespace VinLotteri.ViewModels
             for (int i = 1; i <= 100; i++)
             {
                 Progress = i;
-                await Task.Delay(10);
+                await Task.Delay(13);
             }
         }
     }

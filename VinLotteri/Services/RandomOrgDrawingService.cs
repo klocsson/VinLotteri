@@ -10,16 +10,30 @@ using VinLotteri.Models;
 
 namespace VinLotteri.Services
 {
-    public class RandomOrg : IRandom
+    public class DrawingServiceRandomOrg : IDrawingService
     {
         private RestClient restClient;
         private string apiKey;
-        public RandomOrg(string apiKey)
+        private readonly int nrOfWinners;
+
+        public DrawingServiceRandomOrg(string apiKey, int nrOfWinners)
         {
             this.restClient = new RestClient("https://api.random.org");
             this.apiKey = apiKey;
+            this.nrOfWinners = nrOfWinners;
         }
-        public async Task<List<int>> getRandomNumbers(int from, int to, int size, bool replacement = false)
+        
+        public async Task<List<int>> getShufflingOrder(int @from, int to, int size, bool replacement = false)
+        {
+            return await getRandomNumbers(from, to, size, replacement);
+        }
+
+        public async Task<List<int>> getWinners(int @from, int to, bool replacement = false)
+        {
+            return await getRandomNumbers(from, to, nrOfWinners, replacement);
+        }
+        
+        private async Task<List<int>> getRandomNumbers(int from, int to, int size, bool replacement = false)
         {
             var requestBody = prepareRequestBody(from, to, size, replacement);
             var request = new RestRequest("/json-rpc/2/invoke", Method.POST);

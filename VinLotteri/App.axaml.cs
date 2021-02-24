@@ -28,8 +28,12 @@ namespace VinLotteri
                 Console.WriteLine(Directory.GetCurrentDirectory());
 
                 var apiKey = configuration["random_api_key"];
+                var nrOfWinnersString = configuration["nr_of_winners"];
+
+                Int32.TryParse(nrOfWinnersString, out var nrOfWinners);
+   
                 var db = new Database();
-                var random = new RandomOrg(apiKey);
+                var random = new DrawingServiceRandomOrg(apiKey, nrOfWinners);
                 
                 desktop.MainWindow = new MainWindow
                 {
